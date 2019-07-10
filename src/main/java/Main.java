@@ -1,3 +1,4 @@
+import constant.Constants;
 import job.ScheduleExecution;
 import service.EmailService;
 
@@ -9,7 +10,7 @@ public class Main {
     private static EmailService emailService = new EmailService();
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
-        get("/", (req, res) -> "Main Screen: Gypsy family bot. Created by Ruben H.");
+        get("/", (req, res) -> Constants.HTML_MAIN_PAGE );
         get("/about", (req, res) -> "Gypsy family bot. Created by Ruben H.");
         get("/sendEmailTest", (req, res) -> {
             emailService.sendEmail();

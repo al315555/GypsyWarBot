@@ -9,7 +9,7 @@ public final class ScheduleExecution {
             JobDetail job1 = JobBuilder.newJob(BattleJob.class).withIdentity("battleVS", "uniqueGroup").build();
 
             Trigger trigger1 = TriggerBuilder.newTrigger().withIdentity("simpleTriggerAlgorithm", "uniqueGroup")
-                    .withSchedule(SimpleScheduleBuilder.repeatMinutelyForever()).build();
+                    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever()).build();
             Scheduler scheduler1 = new StdSchedulerFactory().getScheduler();
             scheduler1.start();
             scheduler1.scheduleJob(job1, trigger1);

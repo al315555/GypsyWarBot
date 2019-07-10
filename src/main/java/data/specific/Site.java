@@ -5,7 +5,7 @@ import data.generic.RandomData;
 public class Site extends RandomData {
 
     @Override
-    public String idNameCode() {
-        return null;
+    public String dataType() {
+        return Site.class.getName();
     }
 }

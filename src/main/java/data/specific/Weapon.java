@@ -5,7 +5,7 @@ import data.generic.RandomData;
 public class Weapon extends RandomData {
 
     @Override
-    public String idNameCode() {
-        return null;
+    public String dataType() {
+        return Weapon.class.getName();
     }
 }
