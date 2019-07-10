@@ -10,7 +10,7 @@ public class Main {
     private static EmailService emailService = new EmailService();
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
-        get("/", (req, res) -> Constants.HTML_MAIN_PAGE );
+        get("/", (req, res) -> Constants.HTML_MAIN_PAGE_STARTED );
         get("/about", (req, res) -> "Gypsy family bot. Created by Ruben H.");
         get("/sendEmailTest", (req, res) -> {
             emailService.sendEmail();
