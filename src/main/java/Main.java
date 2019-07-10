@@ -1,3 +1,6 @@
+import job.ScheduleExecution;
+import service.EmailService;
+
 import static spark.Spark.*;
 
 public class Main {
@@ -12,6 +15,7 @@ public class Main {
             emailService.sendEmail();
             return "Gypsy family bot. Created by Ruben H.";
         });
+        ScheduleExecution.execute();
     }
     static int getHerokuAssignedPort() {
         try {
@@ -22,8 +26,9 @@ public class Main {
             }
         }catch (Exception exception) {
             exception.printStackTrace();
-        }finally {
-            return PORT_BY_DEFAULT; //return default port if heroku-port isn't set (i.e. on localhost)
         }
+
+        return PORT_BY_DEFAULT; //return default port if heroku-port isn't set (i.e. on localhost)
+
     }
 }

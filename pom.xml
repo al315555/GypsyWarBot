@@ -75,6 +75,13 @@
             <artifactId>mail</artifactId>
             <version>1.4</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
