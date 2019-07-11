@@ -1,11 +1,20 @@
 package service;
 
+import constant.Constants;
+import data.specific.Member;
+import factory.MemberFactory;
+
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class EmailService {
@@ -52,6 +61,44 @@ public class EmailService {
         t.sendMessage(message, message.getAllRecipients());
         t.close();
 
+
+    }
+
+    public void sendEmailToSupcriptors()  throws Exception {
+        if (!init) return;
+
+        final ArrayList<String> l_emails= new ArrayList<>();
+        final InputStream is = MemberFactory.class.getClassLoader().getResourceAsStream("suscribed_emails.txt");
+        BufferedReader br = null;
+        InputStreamReader isr = null;
+        try{
+            isr = new InputStreamReader(is);
+            br = new BufferedReader(isr);
+            String linea = br.readLine();
+            while(linea != null){
+                final String email = linea;
+                l_emails.add(email);
+                linea = br.readLine();
+            }
+            final Address[] emailsArray = new Address[l_emails.size()];
+
+            for(int counter = 0 ; counter < l_emails.size() ; counter++){
+                emailsArray[counter] = new InternetAddress(l_emails.get(counter));
+            }
+
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress((String) properties.get("mail.smtp.mail.sender")));
+            message.addRecipients(Message.RecipientType.TO, emailsArray);
+            message.setSubject(Constants.EMAIL_SUBJECT_KILL_PRODUCED);
+            message.setContent(Constants.EMAIL_BODY_KILL_PRODUCED, "text/html; charset=utf-8;");
+            Transport t = session.getTransport("smtp");
+            t.connect((String) properties.get("mail.smtp.user"), password);
+            t.sendMessage(message, message.getAllRecipients());
+            t.close();
+
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+        }
 
     }
 

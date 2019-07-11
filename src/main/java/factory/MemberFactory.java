@@ -1,14 +1,15 @@
 package factory;
 
 import data.specific.Member;
-
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class MemberFactory implements FactoryData<Member> {
     private static ArrayList<Member> deadMembers = new ArrayList<>();
-    private static ArrayList<Member> members = loadMembers();
+    private static ArrayList<Member> members = new ArrayList<>();
+    private static ArrayList<Member> allMembers = new ArrayList<>();
+
     @Override
     public Member takeOneRandomly() {
         if( members.size() > 0) {
@@ -19,8 +20,25 @@ public class MemberFactory implements FactoryData<Member> {
         }
     }
 
+	public ArrayList<Member> getDeadMembers(){
+		return (ArrayList<Member> )deadMembers.clone();
+	}
+	
+	public ArrayList<Member> getAliveMembers(){
+		return (ArrayList<Member> )members.clone();
+	}
+	
+	public String getHtmlMembersList(){
+        String res = "<div class=\"grid-container\">";
+        for(Member member: allMembers){
+            boolean redColor = deadMembers.contains(member);
+            res += String.format("<div class=\"grid-item\"><strong style=\"padding: 1px 1px 1px 1px ;color:%s\"> %s </strong></div>", redColor ? "red;text-decoration:line-through;" : "black;"  , member.toString());
+        }
+		return res + "</div>";
+	}
+	
     public boolean isThereAWinner(){
-        return members.size() < 2;
+        return members != null && members.size() < 2;
     }
     public void takeKiller(final Member killer){
         killer.newKill();
@@ -31,29 +49,25 @@ public class MemberFactory implements FactoryData<Member> {
         members.removeAll(deadMembers);
     }
 
-    private static ArrayList<Member> loadMembers() {
+    static {
         final ArrayList<Member> l_members = new ArrayList<>();
-        final URL url = MemberFactory.class.getClassLoader().getResource("members.txt");
-        File file = null;
-        FileReader fr = null;
+        final InputStream is = MemberFactory.class.getClassLoader().getResourceAsStream("members.txt");
         BufferedReader br = null;
+		InputStreamReader isr = null;
         try{
-            file = new File (String.valueOf(url.getPath()));
-            fr = new FileReader (file);
-            br = new BufferedReader(fr);
-            StringBuilder nameBuilder = new StringBuilder();
+			isr = new InputStreamReader(is);
+			br = new BufferedReader(isr);
             String linea = br.readLine();
             while(linea != null){
                 final String name = linea;
                 final Member member = new Member(name);
-                l_members.add(member);
+                members.add(member);
+                allMembers.add(member);
                 linea = br.readLine();
             }
-            return l_members;
 
         }catch (IOException ioException){
             ioException.printStackTrace();
         }
-        return null;
     }
 }

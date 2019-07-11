@@ -2,11 +2,7 @@ package factory;
 
 import data.specific.Member;
 import data.specific.Site;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -22,15 +18,12 @@ public class SiteFactory implements FactoryData<Site> {
 
     private static ArrayList<Site> loadSites() {
         final ArrayList<Site> l_members = new ArrayList<>();
-        final URL url = SiteFactory.class.getClassLoader().getResource("sites.txt");
-        File file = null;
-        FileReader fr = null;
+        final InputStream is = MemberFactory.class.getClassLoader().getResourceAsStream("sites.txt");
         BufferedReader br = null;
+		InputStreamReader isr = null;
         try{
-            file = new File (String.valueOf(url.getPath()));
-            fr = new FileReader (file);
-            br = new BufferedReader(fr);
-            StringBuilder nameBuilder = new StringBuilder();
+			isr = new InputStreamReader(is);
+			br = new BufferedReader(isr);
             String linea = br.readLine();
             while(linea != null){
                 final String name = linea;

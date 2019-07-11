@@ -1,6 +1,8 @@
 import constant.Constants;
 import job.ScheduleExecution;
 import service.EmailService;
+import factory.MemberFactory;
+import algorithm.BattlesAlgorithm;
 
 import static spark.Spark.*;
 
@@ -9,8 +11,9 @@ public class Main {
     public static final String PORT = "PORT";
     private static EmailService emailService = new EmailService();
     public static void main(String[] args) {
+
         port(getHerokuAssignedPort());
-        get("/", (req, res) -> Constants.HTML_MAIN_PAGE_STARTED );
+        get("/", (req, res) -> { return String.format( Constants.HTML_TEMPLATE_WAR_BOT, BattlesAlgorithm.htmlMembersList, BattlesAlgorithm.historicalTable); } );
         get("/about", (req, res) -> "Gypsy family bot. Created by Ruben H.");
         get("/sendEmailTest", (req, res) -> {
             emailService.sendEmail();

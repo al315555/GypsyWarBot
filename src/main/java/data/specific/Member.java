@@ -28,4 +28,12 @@ public class Member extends RandomData {
         return this.distinctCode == ((Member)obj).distinctCode;
 
     }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
 }
