@@ -85,7 +85,7 @@ public final class Constants {
 	public static final String HTML_RESULT_TEMPLATE = "En %s, %s acaba de matar a %s con %s";//site, killer, dead, weapon
 	public static final String HTML_RESULT_TEMPLATE_WINNER = "El ganador es %s con %s muertes realizadas.";
 	public static final String RESULT_TABLE_TEMPLATE = "<table><tr><td><table cellspacing=\"10\" cellpadding=\"0\" width:\"100%%\" ><tr style=\"color:black;background-color:white; text-align:center; width:100%%;\">" +
-            "<th style=\" color:black; text-align:center;font-size:1.2em !important;\">&iquest;Cu&aacute;ndo y C&oacute;mo ha ocurrido?</th>" +
+            "<th style=\" color:black; text-align:center;font-size:1.2em !important;\">&iquest;Cu&aacute;ndo y c&oacute;mo ha ocurrido?</th>" +
             "<th style=\" color:black; text-align:center;font-size:1.2em !important;\">&nbsp;&nbsp;</th></tr></table></td></tr><tr><td><div style=\"height:28em; overflow:auto; border-bottom: 1px solid #ddd;\">" +
             "<table cellspacing=\"0\" cellpadding=\"1\" width:\"95%%\" style=\"color:black;background-color:white; font-size:1em;\">%s</table>";//bodyTable
 	public static final String RESULT_BODY_TABLE_TEMPLATE = "<tr><td style=\" border-bottom: 1px solid #ddd; \">&nbsp;%s&nbsp;&nbsp;</td><td  style=\" border-bottom: 1px solid #ddd; \">&nbsp;%s</td></tr>";//date, result
