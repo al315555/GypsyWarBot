@@ -13,12 +13,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 public final class BattlesAlgorithm {
 
     private static Member winner = null;
 	private static TreeMap<Long, String> historicOfKills= new TreeMap<Long, String>();
 	public static String bodyTable = "";
+	private static boolean fisrtBlood = false;
 	public static String htmlMembersList = "";
 	public static String historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
 
@@ -37,48 +39,58 @@ public final class BattlesAlgorithm {
                 Member killer = factoryMember.takeOneRandomly();
                 Member dead = factoryMember.takeOneRandomly();
 				boolean deadAndKillerSame = dead != null && dead.equals(killer);
-				if(dead != null){
-                    while (deadAndKillerSame && !factoryMember.isThereAWinner()) {
-                        killer = factoryMember.takeOneRandomly();
-                        dead = factoryMember.takeOneRandomly();
-						deadAndKillerSame = dead != null && dead.equals(killer);
-                    }
-                    factoryMember.takeKiller(killer);
-                    factoryMember.takeDead(dead);
-                    System.out.println(String.format("KILLER: %s", killer));
-                    System.out.println(String.format("DEAD: %s", dead));
-                    System.out.println(String.format("WITH: %s", weapon));
-                    System.out.println(String.format("TAKE PLACE IN: %s", site));
-					//site, killer, dead, weapon
-					final String resultOfTheBattle = String.format(Constants.HTML_RESULT_TEMPLATE, site, killer, dead, weapon);
-					Long instant = Calendar.getInstance().getTimeInMillis();
-                    Calendar nowDate = new GregorianCalendar();
-					nowDate.setTimeInMillis(instant);
-                    historicOfKills.put(instant, resultOfTheBattle);
-                    String strDateFormat = "dd/MM/yyyy hh:mm"; // El formato de fecha está especificado
-                    SimpleDateFormat formatSimple = new SimpleDateFormat(strDateFormat);
-                    String dateFormatted = formatSimple.format(nowDate.getTime());
-                    bodyTable = String.format(Constants.RESULT_BODY_TABLE_TEMPLATE,
-                            Constants.DAY_OF_WEEK_ES.get(nowDate.get(Calendar.DAY_OF_WEEK)) + ", " + dateFormatted, resultOfTheBattle) + bodyTable;
-                    if (factoryMember.isThereAWinner()) {
-                        winner = killer;
-						final String winnerStr = String.format(Constants.HTML_RESULT_TEMPLATE_WINNER, killer, killer.getKills());
-						instant = Calendar.getInstance().getTimeInMillis();
-						nowDate.setTimeInMillis(instant);
-						historicOfKills.put(instant, winnerStr);
-                        dateFormatted = formatSimple.format(nowDate.getTime());
-						bodyTable = String.format(Constants.RESULT_BODY_TABLE_TEMPLATE,
-                                Constants.DAY_OF_WEEK_ES.get(nowDate.get(Calendar.DAY_OF_WEEK)) + ", " +dateFormatted , winnerStr) + bodyTable;
-                        System.out.println(String.format("¡WINNER!: %s", killer));
-                    }
-					historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
-					htmlMembersList = factoryMember.getHtmlMembersList();
+				if(dead != null) {
+                    String strDateFormat = Constants.DATE_HOUR_FORMAT;
+                    if (!fisrtBlood) {
+                        fisrtBlood = true;
+                        Calendar nowDate = Calendar.getInstance();
+                        Long instant = Calendar.getInstance().getTimeInMillis();
+                        nowDate.setTimeInMillis(instant);
+                        SimpleDateFormat formatSimple = new SimpleDateFormat(strDateFormat);
+                        String dateFormatted = formatSimple.format(nowDate.getTime());
+                        bodyTable = String.format(Constants.RESULT_BODY_TABLE_TEMPLATE,
+                                Constants.DAY_OF_WEEK_ES.get(nowDate.get(Calendar.DAY_OF_WEEK)) + ", " + dateFormatted, Constants.HTML_MSG_INIT_PLAY) + bodyTable;
+                    }else{
+                        while (deadAndKillerSame && !factoryMember.isThereAWinner()) {
+                            killer = factoryMember.takeOneRandomly();
+                            dead = factoryMember.takeOneRandomly();
+                            deadAndKillerSame = dead != null && dead.equals(killer);
+                        }
+                        factoryMember.takeKiller(killer);
+                        factoryMember.takeDead(dead);
+                        System.out.println(String.format("KILLER: %s", killer));
+                        System.out.println(String.format("DEAD: %s", dead));
+                        System.out.println(String.format("WITH: %s", weapon));
+                        System.out.println(String.format("TAKE PLACE IN: %s", site));
+                        //site, killer, dead, weapon
+                        final String resultOfTheBattle = String.format(Constants.HTML_RESULT_TEMPLATE, site, killer, dead, weapon);
+                        Long instant = Calendar.getInstance().getTimeInMillis();
+                        Calendar nowDate = new GregorianCalendar();
+                        nowDate.setTimeInMillis(instant);
+                        historicOfKills.put(instant, resultOfTheBattle);
+                        SimpleDateFormat formatSimple = new SimpleDateFormat(strDateFormat);
+                        String dateFormatted = formatSimple.format(nowDate.getTime());
+                        bodyTable = String.format(Constants.RESULT_BODY_TABLE_TEMPLATE,
+                                Constants.DAY_OF_WEEK_ES.get(nowDate.get(Calendar.DAY_OF_WEEK)) + ", " + dateFormatted, resultOfTheBattle) + bodyTable;
+                        if (factoryMember.isThereAWinner()) {
+                            winner = killer;
+                            final String winnerStr = String.format(Constants.HTML_RESULT_TEMPLATE_WINNER, killer, killer.getKills());
+                            instant = Calendar.getInstance().getTimeInMillis();
+                            nowDate.setTimeInMillis(instant);
+                            historicOfKills.put(instant, winnerStr);
+                            dateFormatted = formatSimple.format(nowDate.getTime());
+                            bodyTable = String.format(Constants.RESULT_BODY_TABLE_TEMPLATE,
+                                    Constants.DAY_OF_WEEK_ES.get(nowDate.get(Calendar.DAY_OF_WEEK)) + ", " + dateFormatted, winnerStr) + bodyTable;
+                            System.out.println(String.format("¡WINNER!: %s", killer));
+                        }
 
-					/*Sending emails to suscriptors*/
-                    EmailService l_emailService = new EmailService();
-                    l_emailService.init();
-                    l_emailService.sendEmailToSupcriptors();
-
+                        /*Sending emails to suscriptors*/
+                        EmailService l_emailService = new EmailService();
+                        l_emailService.init();
+                        l_emailService.sendEmailToSupcriptors();
+                    }
+                    historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
+                    htmlMembersList = factoryMember.getHtmlMembersList();
                     System.out.println("Done!!");
 				}else{
 					System.out.println("Any member in the list. NOTHING TO DONE");

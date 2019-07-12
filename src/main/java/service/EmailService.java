@@ -1,7 +1,6 @@
 package service;
 
 import constant.Constants;
-import data.specific.Member;
 import factory.MemberFactory;
 
 import javax.mail.Address;
@@ -64,14 +63,13 @@ public class EmailService {
 
     }
 
-    public void sendEmailToSupcriptors()  throws Exception {
+    public void sendEmailToSupcriptors(){
         if (!init) return;
-
-        final ArrayList<String> l_emails= new ArrayList<>();
-        final InputStream is = MemberFactory.class.getClassLoader().getResourceAsStream("suscribed_emails.txt");
-        BufferedReader br = null;
-        InputStreamReader isr = null;
         try{
+            final ArrayList<String> l_emails= new ArrayList<>();
+            final InputStream is = MemberFactory.class.getClassLoader().getResourceAsStream("suscribed_emails.txt");
+            BufferedReader br = null;
+            InputStreamReader isr = null;
             isr = new InputStreamReader(is);
             br = new BufferedReader(isr);
             String linea = br.readLine();
@@ -98,8 +96,50 @@ public class EmailService {
 
         }catch (IOException ioException){
             ioException.printStackTrace();
+
+        }catch (Exception exception){
+            exception.printStackTrace();
         }
 
     }
 
+    public void sendEmailToSupcriptorsInit() {
+        if (!init) return;
+
+
+        try{
+            final ArrayList<String> l_emails= new ArrayList<>();
+            final InputStream is = MemberFactory.class.getClassLoader().getResourceAsStream("suscribed_emails.txt");
+            BufferedReader br;
+            InputStreamReader isr;
+            isr = new InputStreamReader(is);
+            br = new BufferedReader(isr);
+            String linea = br.readLine();
+            while(linea != null){
+                final String email = linea;
+                l_emails.add(email);
+                linea = br.readLine();
+            }
+            final Address[] emailsArray = new Address[l_emails.size()];
+
+            for(int counter = 0 ; counter < l_emails.size() ; counter++){
+                emailsArray[counter] = new InternetAddress(l_emails.get(counter));
+            }
+
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress((String) properties.get("mail.smtp.mail.sender")));
+            message.addRecipients(Message.RecipientType.TO, emailsArray);
+            message.setSubject(Constants.EMAIL_SUBJECT_START);
+            message.setContent(Constants.EMAIL_BODY_START, "text/html; charset=utf-8;");
+            Transport t = session.getTransport("smtp");
+            t.connect((String) properties.get("mail.smtp.user"), password);
+            t.sendMessage(message, message.getAllRecipients());
+            t.close();
+
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
 }

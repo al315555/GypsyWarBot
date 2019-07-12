@@ -4,6 +4,8 @@ import service.EmailService;
 import factory.MemberFactory;
 import algorithm.BattlesAlgorithm;
 
+import java.util.concurrent.TimeUnit;
+
 import static spark.Spark.*;
 
 public class Main {
@@ -19,15 +21,20 @@ public class Main {
             emailService.sendEmail();
             return "Gypsy family bot. Created by Ruben H.";
         });
+
         ScheduleExecution.execute();
     }
     static int getHerokuAssignedPort() {
         try {
             emailService.init();
+
             ProcessBuilder processBuilder = new ProcessBuilder();
             if (processBuilder.environment().get(PORT) != null) {
+                emailService.sendEmailToSupcriptorsInit();
                 return Integer.parseInt(processBuilder.environment().get(PORT));
             }
+
+            emailService.sendEmailToSupcriptorsInit();
         }catch (Exception exception) {
             exception.printStackTrace();
         }

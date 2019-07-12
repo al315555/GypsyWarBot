@@ -90,10 +90,37 @@ public final class Constants {
             "<table cellspacing=\"0\" cellpadding=\"1\" width:\"95%%\" style=\"color:black;background-color:white; font-size:1em;\">%s</table>";//bodyTable
 	public static final String RESULT_BODY_TABLE_TEMPLATE = "<tr><td style=\" border-bottom: 1px solid #ddd; \">&nbsp;%s&nbsp;&nbsp;</td><td  style=\" border-bottom: 1px solid #ddd; \">&nbsp;%s</td></tr>";//date, result
     public static final HashMap<Integer, String> DAY_OF_WEEK_ES = new HashMap<Integer, String>(){{
-        put(1, "Lunes");put(2, "Martes");put(3, "Miercoles");put(4, "Jueves");put(5, "Viernes");put(6, "Sabado");put(7, "Domingo");
+        put(2, "Lunes");put(3, "Martes");put(4, "Miercoles");put(5, "Jueves");put(6, "Viernes");put(7, "Sabado");put(1, "Domingo");
     }};
 
-    public static final String EMAIL_SUBJECT_KILL_PRODUCED = "&iexcl;Se ha producido un ASESINATO en la Familia!";
+    public static final String EMAIL_SUBJECT_KILL_PRODUCED = "War Bot. Se ha producido un ASESINATO en la Familia";
+    public static final String EMAIL_SUBJECT_START = "War Bot ¡Por fin empieza!";
+    public static final String DATE_HOUR_FORMAT =  "dd/MM/yyyy hh:mm";
+    public static final String HTML_MSG_INIT_PLAY = "&iexcl;ATENTOS! Las batallas acaban de empezar.";
+    public static final String EMAIL_BODY_START = "<!DOCTYPE html>\n" +
+			"<html>\n" +
+			"<title>Familia Gitanah War Bot</title>\n" +
+			"<meta charset=\"UTF-8\">\n" +
+			"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+			"<link rel=\"stylesheet\" href=\"https://www.w3schools.com/w3css/4/w3.css\">\n" +
+			"<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Raleway\"/>\n" +
+			"<link rel=\"shortcut icon\" type=\"image/png\" href=\"https://cdn3.iconfinder.com/data/icons/outline-location-icon-set/64/Weapons_1-512.png\"/>" +
+			"<style>" +
+			".body{background-image: url(\"https://www.sinembargo.mx/wp-content/uploads/2013/07/peleando-por-un-sueno.jpg\");\n" +
+			"  background-repeat: no-repeat;\n" +
+			"  background-attachment: fixed;}" +
+			"</style>" +
+			"<body class=\"w3-light-grey\" style=\"font-family: \"Raleway\", sans-serif;\">\n" +
+			"<!-- Header -->\n" +
+			"<header class=\"w3-container w3-center w3-padding-32\"> \n" +
+			"  <h2>Familia Gitanah War Bot</h2>"+
+			"  <h1><b>&iexcl;Est&aacute;n apunto de comenzar las batallas!</b></h1>\n" +
+			"  <p>La guerra de la familia, ha comenzado. Paciencia, en cuanto ocurra algo, tendr&aacute;s un nuevo email. As&iacute; no est&aacute;s pendiente todo el tiempo de lo que sucede. A no ser que te lo cuenten antes... <p>&iquest;Ser&aacute;s el primero en enterarte? " +
+			" Echa un vistazo a las batallas desde el simulador. "+
+			"<p>Para ir al simulador pulsa en el <a href=\"https://gypsywarbot.herokuapp.com/\">enlace</a>"+
+			"</header>\n" +
+			"</body>\n" +
+			"</html>\n";
     public static final String EMAIL_BODY_KILL_PRODUCED = "<!DOCTYPE html>\n" +
             "<html>\n" +
             "<title>Familia Gitanah War Bot</title>\n" +
@@ -106,7 +133,7 @@ public final class Constants {
             "<!-- Header -->\n" +
             "<header class=\"w3-container w3-center w3-padding-32\"> \n" +
             "  <h1><b>Familia Gitanah War Bot</b></h1>\n" +
-            "  <p>Echa un vistazo a las batallas. &iquest;Habr&aacute; ganado ya alquien?" +
+            "  <p>Echa un vistazo a las batallas. &iquest;Habr&aacute; ganado ya alguien?" +
             "<p>Para ir al simulador pulsa en el <a href=\"https://gypsywarbot.herokuapp.com/\">enlace</a>"+
             "</header>\n" +
             "</body>\n" +
