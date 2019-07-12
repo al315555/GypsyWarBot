@@ -69,7 +69,7 @@ public final class Constants {
             "  <!-- HISTORICAL -->\n" +
             "  <div class=\"w3-card w3-margin\" style=\"background-color:white;\">\n" +
             "    <div class=\"w3-container w3-padding\">\n" +
-            "      <h4>&iquest;Que ha ocurrido hasta el momento?</h4>\n" +
+            "      <h4>&iquest;Qu&eacute; ha ocurrido hasta el momento?</h4>\n" +
             "    </div>\n" +
             "    <div>" +
             "       %s " +
