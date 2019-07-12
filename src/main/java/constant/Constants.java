@@ -93,7 +93,7 @@ public final class Constants {
         put(0, "Lunes");put(1, "Martes");put(2, "Miercoles");put(3, "Jueves");put(4, "Viernes");put(5, "Sabado");put(6, "Domingo");
     }};
 
-    public static final String EMAIL_SUBJECT_KILL_PRODUCED = "¡Se ha producido un ASESINATO en la Familia!";
+    public static final String EMAIL_SUBJECT_KILL_PRODUCED = "&iexcl;Se ha producido un ASESINATO en la Familia!";
     public static final String EMAIL_BODY_KILL_PRODUCED = "<!DOCTYPE html>\n" +
             "<html>\n" +
             "<title>Familia Gitanah War Bot</title>\n" +
