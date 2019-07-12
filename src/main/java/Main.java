@@ -25,21 +25,22 @@ public class Main {
         ScheduleExecution.execute();
     }
     static int getHerokuAssignedPort() {
+        Integer portReturn = PORT_BY_DEFAULT;
+
         try {
             emailService.init();
-
             ProcessBuilder processBuilder = new ProcessBuilder();
             if (processBuilder.environment().get(PORT) != null) {
                 emailService.sendEmailToSupcriptorsInit();
-                return Integer.parseInt(processBuilder.environment().get(PORT));
+                portReturn =  Integer.parseInt(processBuilder.environment().get(PORT));
             }
-
             emailService.sendEmailToSupcriptorsInit();
+
         }catch (Exception exception) {
             exception.printStackTrace();
         }
 
-        return PORT_BY_DEFAULT; //return default port if heroku-port isn't set (i.e. on localhost)
+        return portReturn; //return default port if heroku-port isn't set (i.e. on localhost)
 
     }
 }
