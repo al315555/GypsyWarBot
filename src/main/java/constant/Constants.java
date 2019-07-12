@@ -90,7 +90,7 @@ public final class Constants {
             "<table cellspacing=\"0\" cellpadding=\"1\" width:\"95%%\" style=\"color:black;background-color:white; font-size:1em;\">%s</table>";//bodyTable
 	public static final String RESULT_BODY_TABLE_TEMPLATE = "<tr><td style=\" border-bottom: 1px solid #ddd; \">&nbsp;%s&nbsp;&nbsp;</td><td  style=\" border-bottom: 1px solid #ddd; \">&nbsp;%s</td></tr>";//date, result
     public static final HashMap<Integer, String> DAY_OF_WEEK_ES = new HashMap<Integer, String>(){{
-        put(0, "Lunes");put(1, "Martes");put(2, "Miercoles");put(3, "Jueves");put(4, "Viernes");put(5, "Sabado");put(6, "Domingo");
+        put(1, "Lunes");put(2, "Martes");put(3, "Miercoles");put(4, "Jueves");put(5, "Viernes");put(6, "Sabado");put(7, "Domingo");
     }};
 
     public static final String EMAIL_SUBJECT_KILL_PRODUCED = "&iexcl;Se ha producido un ASESINATO en la Familia!";
