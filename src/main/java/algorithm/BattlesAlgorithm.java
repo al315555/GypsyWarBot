@@ -11,10 +11,7 @@ import constant.Constants;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public final class BattlesAlgorithm {
@@ -50,8 +47,8 @@ public final class BattlesAlgorithm {
                     String strDateFormat = Constants.DATE_HOUR_FORMAT;
                     if (!fisrtBlood) {
                         fisrtBlood = true;
-                        Calendar nowDate = Calendar.getInstance();
-                        Long instant = Calendar.getInstance().getTimeInMillis();
+                        Calendar nowDate = Calendar.getInstance(TimeZone.getTimeZone("GMT+0:00"));
+                        Long instant = nowDate.getTimeInMillis();
                         nowDate.setTimeInMillis(instant);
                         SimpleDateFormat formatSimple = new SimpleDateFormat(strDateFormat);
                         String dateFormatted = formatSimple.format(nowDate.getTime());
@@ -71,8 +68,8 @@ public final class BattlesAlgorithm {
                         System.out.println(String.format("TAKE PLACE IN: %s", site));
                         //site, killer, dead, weapon
                         final String resultOfTheBattle = String.format(Constants.HTML_RESULT_TEMPLATE, site, killer, dead, weapon);
-                        Long instant = Calendar.getInstance().getTimeInMillis();
-                        Calendar nowDate = new GregorianCalendar();
+                        Calendar nowDate = Calendar.getInstance(TimeZone.getTimeZone("GMT+0:00"));;
+                        Long instant = nowDate.getTimeInMillis();
                         nowDate.setTimeInMillis(instant);
                         historicOfKills.put(instant, resultOfTheBattle);
                         SimpleDateFormat formatSimple = new SimpleDateFormat(strDateFormat);
@@ -82,8 +79,8 @@ public final class BattlesAlgorithm {
                         if (factoryMember.isThereAWinner()) {
                             winner = killer;
                             final String winnerStr = String.format(Constants.HTML_RESULT_TEMPLATE_WINNER, killer, killer.getKills());
-                            instant = Calendar.getInstance().getTimeInMillis();
-                            nowDate.setTimeInMillis(instant);
+                            nowDate = Calendar.getInstance(TimeZone.getTimeZone("GMT+0:00"));;
+                            instant = nowDate.getTimeInMillis();
                             historicOfKills.put(instant, winnerStr);
                             dateFormatted = formatSimple.format(nowDate.getTime());
                             bodyTable = String.format(Constants.RESULT_BODY_TABLE_TEMPLATE,

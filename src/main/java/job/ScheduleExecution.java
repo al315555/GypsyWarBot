@@ -18,8 +18,8 @@ public final class ScheduleExecution {
             scheduler1.scheduleJob(awakeJob, trigger1);
 
             Trigger trigger2 = TriggerBuilder.newTrigger().withIdentity("simpleTriggerAlgorithm", "1Group")
-                    /*.withSchedule(SimpleScheduleBuilder.repeatHourlyForever(INTERVAL_HOURS)).build();*/
-                    .withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(1)).build();
+                    .withSchedule(SimpleScheduleBuilder.repeatHourlyForever(INTERVAL_HOURS)).build();
+                    /*.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(1)).build();*/
             Scheduler scheduler2 = new StdSchedulerFactory().getScheduler();
             scheduler2.start();
             scheduler2.scheduleJob(job1, trigger2);
