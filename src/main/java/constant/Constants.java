@@ -93,8 +93,8 @@ public final class Constants {
         put(2, "Lunes");put(3, "Martes");put(4, "Miercoles");put(5, "Jueves");put(6, "Viernes");put(7, "Sabado");put(1, "Domingo");
     }};
 
-    public static final String EMAIL_SUBJECT_KILL_PRODUCED = "War Bot. Se ha producido un ASESINATO en la Familia";
-    public static final String EMAIL_SUBJECT_START = "War Bot ¡Por fin empieza!";
+    public static final String EMAIL_SUBJECT_KILL_PRODUCED = "War Bot. Se ha producido el ASESINATO %s en la Familia";
+    public static final String EMAIL_SUBJECT_START = "War Bot. Han comenzado las batallas.";
     public static final String DATE_HOUR_FORMAT =  "dd/MM/yyyy hh:mm";
     public static final String HTML_MSG_INIT_PLAY = "&iexcl;ATENTOS! Las batallas acaban de empezar.";
     public static final String EMAIL_BODY_START = "<!DOCTYPE html>\n" +

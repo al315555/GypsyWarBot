@@ -31,10 +31,8 @@ public class Main {
             emailService.init();
             ProcessBuilder processBuilder = new ProcessBuilder();
             if (processBuilder.environment().get(PORT) != null) {
-                emailService.sendEmailToSupcriptorsInit();
                 portReturn =  Integer.parseInt(processBuilder.environment().get(PORT));
             }
-            emailService.sendEmailToSupcriptorsInit();
 
         }catch (Exception exception) {
             exception.printStackTrace();

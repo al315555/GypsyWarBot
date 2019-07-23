@@ -22,7 +22,7 @@ public class EmailService {
     private boolean init;
     private Session session;
 
-    public void init() throws Exception {
+    public EmailService init() throws Exception {
         try {
             Properties props = new Properties();
             InputStream is = EmailService.class.getClassLoader().getResourceAsStream("email.properties");
@@ -40,6 +40,7 @@ public class EmailService {
             session = Session.getDefaultInstance(properties);
             session.setDebug(true);
             init = true;
+            return this;
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new Exception(ex);
@@ -63,7 +64,7 @@ public class EmailService {
 
     }
 
-    public void sendEmailToSupcriptors(){
+    public void sendEmailToSupcriptors(int deadNumber){
         if (!init) return;
         try{
             final ArrayList<String> l_emails= new ArrayList<>();
@@ -87,7 +88,7 @@ public class EmailService {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress((String) properties.get("mail.smtp.mail.sender")));
             message.addRecipients(Message.RecipientType.TO, emailsArray);
-            message.setSubject(Constants.EMAIL_SUBJECT_KILL_PRODUCED);
+            message.setSubject(String.format(Constants.EMAIL_SUBJECT_KILL_PRODUCED,String.valueOf(deadNumber)));
             message.setContent(Constants.EMAIL_BODY_KILL_PRODUCED, "text/html; charset=utf-8;");
             Transport t = session.getTransport("smtp");
             t.connect((String) properties.get("mail.smtp.user"), password);

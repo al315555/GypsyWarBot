@@ -20,13 +20,21 @@ public class MemberFactory implements FactoryData<Member> {
         }
     }
 
-	public ArrayList<Member> getDeadMembers(){
+	public static ArrayList<Member> getDeadMembers(){
 		return (ArrayList<Member> )deadMembers.clone();
 	}
 	
-	public ArrayList<Member> getAliveMembers(){
+	public static ArrayList<Member> getAliveMembers(){
 		return (ArrayList<Member> )members.clone();
 	}
+
+    public static void setDeadMembers(ArrayList<Member> l_mem ){
+        deadMembers = (ArrayList<Member> )l_mem.clone();
+    }
+
+    public static void setAliveMembers( ArrayList<Member> l_mem){
+        members = (ArrayList<Member> )l_mem.clone();
+    }
 	
 	public String getHtmlMembersList(){
         String res = "<div class=\"grid-container\">";
