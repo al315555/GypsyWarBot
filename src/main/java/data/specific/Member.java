@@ -11,6 +11,10 @@ public class Member extends RandomData {
     public Member(final String label){
         super(COUNT_ID++, label);
     }
+    public Member(final Integer id, final String label){
+        super(id, label);
+        COUNT_ID = id > COUNT_ID ? id : COUNT_ID;
+    }
 
     public void newKill(){kills++;}
 

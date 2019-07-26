@@ -1,5 +1,6 @@
 import constant.Constants;
 import job.ScheduleExecution;
+import service.BackUpService;
 import service.EmailService;
 import factory.MemberFactory;
 import algorithm.BattlesAlgorithm;
@@ -16,10 +17,14 @@ public class Main {
 
         port(getHerokuAssignedPort());
         get("/", (req, res) -> { return String.format( Constants.HTML_TEMPLATE_WAR_BOT, BattlesAlgorithm.htmlMembersList, BattlesAlgorithm.historicalTable); } );
-        get("/about", (req, res) -> "Gypsy family bot. Created by Ruben H.");
+        get("/about", (req, res) -> "Gypsy family bot. Created by Ruben Higueras.");
         get("/sendEmailTest", (req, res) -> {
             emailService.sendEmail();
             return "Gypsy family bot. Created by Ruben H.";
+        });
+        get("/restoreBackup", (req, res) -> {
+            BackUpService.toBackUpEvents();
+            return "BackUp Restored Succesfully.";
         });
 
         ScheduleExecution.execute();

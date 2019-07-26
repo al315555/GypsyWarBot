@@ -6,6 +6,7 @@ import data.specific.Weapon;
 import factory.MemberFactory;
 import factory.SiteFactory;
 import factory.WeaponFactory;
+import service.BackUpService;
 import service.EmailService;
 import constant.Constants;
 
@@ -29,10 +30,7 @@ public final class BattlesAlgorithm {
     public static final void execution(){
         System.out.println("Executing service algorithm... ");
         try {
-            /*EmailService l_emailService = new EmailService();
-            l_emailService.init();
-            l_emailService.sendEmail();*/
-            //loadData();
+            loadData();
             if(!fisrtBlood) new EmailService().init().sendEmailToSupcriptorsInit();
             if (winner == null){
                 MemberFactory factoryMember = new MemberFactory();
@@ -96,7 +94,7 @@ public final class BattlesAlgorithm {
                     }
                     historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
                     htmlMembersList = factoryMember.getHtmlMembersList();
-                    //storeData();
+                    storeData();
                     System.out.println("Done!!");
 
 				}else{
@@ -115,112 +113,37 @@ public final class BattlesAlgorithm {
 
     private static void storeData(){
         try {
-            storeViewInFile();
+            final HashMap<String, Object> backup = new HashMap<>();
+            /*backup.put(Constants.STRING_ALIVES, aliveString);
+            backup.put(Constants.STRING_DEADS, deadString);*/
+            backup.put(Constants.ALIVES, MemberFactory.getAliveMembers());
+            backup.put(Constants.DEADS, MemberFactory.getDeadMembers());
+            backup.put(Constants.HTML_BODY_TABLE, bodyTable);
+            BackUpService.toBackUpData(backup);
+
+            /*storeViewInFile();
             storeDeadsDataInFile();
-            storeAliveDataInFile();
+            storeAliveDataInFile();*/
 
         }catch (Exception expcetion){
             expcetion.printStackTrace();
         }
     }
 
-    private static void storeViewInFile() throws Exception{
-            String sFichero = VIEW_STATUS_TXT;
-            File fichero = new File(sFichero);
-            BufferedWriter bw = new BufferedWriter(new FileWriter(sFichero));
-            bw.write("" + winner + "\n");
-            bw.write("" + htmlMembersList + "\n");
-            bw.write("" + historicalTable + "\n");
-            bw.close();
-    }
-
-    private static void storeDeadsDataInFile() throws Exception{
-
-            String sFichero = ALGO_STATUS_DEADS_TXT;
-            File fichero = new File(sFichero);
-            BufferedWriter bw = new BufferedWriter(new FileWriter(sFichero));
-            /*if (fichero.exists()) {
-                for (int x=0;x<;x++)
-
-            } else {
-
-            }*/
-            for(Member member : MemberFactory.getDeadMembers()){
-                bw.write("" + member.toString() + "\n");
-            }
-
-            bw.close();
-    }
-
-    private static void storeAliveDataInFile() throws Exception{
-            String sFichero = ALGO_STATUS_ALIVE_TXT;
-            File fichero = new File(sFichero);
-            BufferedWriter bw = new BufferedWriter(new FileWriter(sFichero));
-            /*if (fichero.exists()) {
-                for (int x=0;x<;x++)
-
-            } else {
-
-            }*/
-            for(Member member : MemberFactory.getAliveMembers()){
-                bw.write("" + member.toString() + "\n");
-            }
-
-            bw.close();
-    }
-
     private static void loadData(){
         try {
             fisrtBlood = false;
-            loadAliveMembers();
-            loadDeadMembers();
-            loadView();
+            final HashMap<String, Object> backup = new HashMap<>();
+            BackUpService.toRetrieveData(backup);
             fisrtBlood = !MemberFactory.getDeadMembers().isEmpty();
+            bodyTable = (String ) backup.get(Constants.HTML_BODY_TABLE);
+            MemberFactory.setAliveMembers((ArrayList<Member>) backup.get(Constants.ALIVES));
+            MemberFactory.setDeadMembers((ArrayList<Member>) backup.get(Constants.DEADS));
+            historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
+            htmlMembersList = MemberFactory.getHtmlMembersList();
         }catch (Exception exception){
             exception.printStackTrace();
 
         }
-    }
-
-    private static void loadAliveMembers() throws Exception{
-        final ArrayList<Member> aliveMembers = new ArrayList<>();
-        String sFichero1 = ALGO_STATUS_ALIVE_TXT;
-        File fichero1 = new File(sFichero1);
-        BufferedReader br1 = new BufferedReader(new FileReader(sFichero1));
-        String memberAlive = br1.readLine();
-        while(memberAlive != null){
-            final String name = memberAlive;
-            final Member member = new Member(name);
-            aliveMembers.add(member);
-            memberAlive = br1.readLine();
-        }
-        br1.close();
-        MemberFactory.setAliveMembers(aliveMembers);
-    }
-
-    private static void loadDeadMembers() throws Exception{
-        final ArrayList<Member> deadMembers = new ArrayList<>();
-        String sFichero1 = ALGO_STATUS_DEADS_TXT;
-        File fichero1 = new File(sFichero1);
-        BufferedReader br1 = new BufferedReader(new FileReader(sFichero1));
-        String memberDead = br1.readLine();
-        while(memberDead != null){
-            final String name = memberDead;
-            final Member member = new Member(name);
-            deadMembers.add(member);
-            memberDead = br1.readLine();
-        }
-        MemberFactory.setDeadMembers(deadMembers);
-        br1.close();
-    }
-
-    private static void loadView() throws Exception{
-        String sFichero1 = VIEW_STATUS_TXT;
-        File fichero1 = new File(sFichero1);
-        BufferedReader br1 = new BufferedReader(new FileReader(sFichero1));
-        winner = new Member(br1.readLine());
-        htmlMembersList = br1.readLine();
-        historicalTable = br1.readLine();
-        br1.close();
     }
 }

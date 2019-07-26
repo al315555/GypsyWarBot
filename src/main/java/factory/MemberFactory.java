@@ -36,7 +36,7 @@ public class MemberFactory implements FactoryData<Member> {
         members = (ArrayList<Member> )l_mem.clone();
     }
 	
-	public String getHtmlMembersList(){
+	public static String getHtmlMembersList(){
         String res = "<div class=\"grid-container\">";
         for(Member member: allMembers){
             boolean redColor = deadMembers.contains(member);

@@ -138,6 +138,12 @@ public final class Constants {
             "</header>\n" +
             "</body>\n" +
             "</html>\n";
+    public static final String ALIVES = "ALIVES";
+    public static final String DEADS = "DEADS";
+    public static final String STRING_DEADS = "STRING_DEADS";
+    public static final String STRING_ALIVES= "STRING_ALIVES";
+    public static final String HTML_BODY_TABLE= "HTML_BODY_TABLE";
+
 
 
 }
