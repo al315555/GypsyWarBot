@@ -67,7 +67,7 @@ public final class BattlesAlgorithm {
                         //site, killer, dead, weapon
                         final String resultOfTheBattle = String.format(Constants.HTML_RESULT_TEMPLATE, site, killer, dead, weapon);
                         Calendar nowDate = Calendar.getInstance();;
-                        Long instant = nowDate.getTimeInMillis() + 7200000;
+                        Long instant = nowDate.getTimeInMillis() + MILISECONDS_SHIFT_INT;
                         nowDate.setTimeInMillis(instant);
                         historicOfKills.put(instant, resultOfTheBattle);
                         SimpleDateFormat formatSimple = new SimpleDateFormat(strDateFormat);
@@ -78,7 +78,7 @@ public final class BattlesAlgorithm {
                             winner = killer;
                             final String winnerStr = String.format(Constants.HTML_RESULT_TEMPLATE_WINNER, killer, killer.getKills());
                             nowDate = Calendar.getInstance();;
-                            instant = nowDate.getTimeInMillis() + 7200000;
+                            instant = nowDate.getTimeInMillis() + MILISECONDS_SHIFT_INT;
                             nowDate.setTimeInMillis(instant);
                             historicOfKills.put(instant, winnerStr);
                             dateFormatted = formatSimple.format(nowDate.getTime());
@@ -113,6 +113,7 @@ public final class BattlesAlgorithm {
 
     private static void storeData(){
         try {
+
             final HashMap<String, Object> backup = new HashMap<>();
             /*backup.put(Constants.STRING_ALIVES, aliveString);
             backup.put(Constants.STRING_DEADS, deadString);*/
@@ -132,15 +133,18 @@ public final class BattlesAlgorithm {
 
     private static void loadData(){
         try {
-            fisrtBlood = false;
             final HashMap<String, Object> backup = new HashMap<>();
             BackUpService.toRetrieveData(backup);
-            fisrtBlood = !MemberFactory.getDeadMembers().isEmpty();
-            bodyTable = (String ) backup.get(Constants.HTML_BODY_TABLE);
-            MemberFactory.setAliveMembers((ArrayList<Member>) backup.get(Constants.ALIVES));
-            MemberFactory.setDeadMembers((ArrayList<Member>) backup.get(Constants.DEADS));
+            bodyTable = backup.get(Constants.HTML_BODY_TABLE) != null ? (String ) backup.get(Constants.HTML_BODY_TABLE) : "";
+            if(backup.get(Constants.HTML_BODY_TABLE) != null){
+                MemberFactory.setAliveMembers((ArrayList<Member>) backup.get(Constants.ALIVES));
+                MemberFactory.setDeadMembers((ArrayList<Member>) backup.get(Constants.DEADS));
+            }else{
+                MemberFactory.loadResourcesData();
+            }
             historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
             htmlMembersList = MemberFactory.getHtmlMembersList();
+            fisrtBlood = !"".equals(bodyTable);
         }catch (Exception exception){
             exception.printStackTrace();
 

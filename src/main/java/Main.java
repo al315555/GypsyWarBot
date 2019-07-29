@@ -22,7 +22,7 @@ public class Main {
             emailService.sendEmail();
             return "Gypsy family bot. Created by Ruben H.";
         });
-        get("/restoreBackup", (req, res) -> {
+        get("/restore", (req, res) -> {
             BackUpService.toBackUpEvents();
             return "BackUp Restored Succesfully.";
         });

@@ -57,18 +57,20 @@ public class MemberFactory implements FactoryData<Member> {
         members.removeAll(deadMembers);
     }
 
-    static {
-        final ArrayList<Member> l_members = new ArrayList<>();
+    public static void loadResourcesData(){
+        allMembers = new ArrayList<>();
+        members = new ArrayList<>();
         final InputStream is = MemberFactory.class.getClassLoader().getResourceAsStream("members.txt");
         BufferedReader br = null;
-		InputStreamReader isr = null;
+        InputStreamReader isr = null;
         try{
-			isr = new InputStreamReader(is);
-			br = new BufferedReader(isr);
+            isr = new InputStreamReader(is);
+            br = new BufferedReader(isr);
             String linea = br.readLine();
+            int count = 1;
             while(linea != null){
                 final String name = linea;
-                final Member member = new Member(name);
+                final Member member = new Member(count++, name);
                 members.add(member);
                 allMembers.add(member);
                 linea = br.readLine();
@@ -77,5 +79,9 @@ public class MemberFactory implements FactoryData<Member> {
         }catch (IOException ioException){
             ioException.printStackTrace();
         }
+    }
+
+    static {
+        loadResourcesData();
     }
 }

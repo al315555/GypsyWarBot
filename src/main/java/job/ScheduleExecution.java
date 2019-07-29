@@ -5,6 +5,7 @@ import org.quartz.impl.StdSchedulerFactory;
 
 public final class ScheduleExecution {
     private static final int INTERVAL_MINUTES = 5;
+    private static final int INTERVAL_HALF_HOURS = 30;
     private static final int INTERVAL_HOURS = 4;
     public static final void execute(){
         try {

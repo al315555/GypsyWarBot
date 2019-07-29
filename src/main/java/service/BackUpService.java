@@ -14,7 +14,7 @@ public class BackUpService {
     private static final String INSERT_INTO_DEAD_MEMBERS = "INSERT INTO DEAD_MEMBERS(id, member_name) VALUES (?,?)";
     private static final String INSERT_INTO_ALIVE_MEMBERS = "INSERT INTO ALIVE_MEMBERS(id, member_name) VALUES (?,?)";
     private static final String INSERT_INTO_BODY_TABLE = "INSERT INTO BODY_TABLE(html_body_table) VALUES (?)";
-    private static final String INSERT_INTO_BACKUP_EVENTS = "INSERT INTO BACKUP_EVENTS(reset_date, aliveMembers, deadMembers, html_body_table) VALUES (CURRENT_DATE , ?, ?, ?)";
+    private static final String INSERT_INTO_BACKUP_EVENTS = "INSERT INTO BACKUP_EVENTS(reset_date, aliveMembers, deadMembers, html_body_table) VALUES (CURRENT_TIMESTAMP     , ?, ?, ?)";
     private static final String DELETE_FROM_BODY_TABLE = "DELETE FROM BODY_TABLE";
     private static final String DELETE_FROM_ALIVE_MEMBERS = "DELETE FROM ALIVE_MEMBERS";
     private static final String DELETE_FROM_DEAD_MEMBERS = "DELETE FROM DEAD_MEMBERS";
@@ -56,8 +56,8 @@ public class BackUpService {
                 bodyTableHTML = rs.getString("html_body_table");
             }
 
-            dicToRetrieve.put(Constants.STRING_ALIVES, aliveString);
-            dicToRetrieve.put(Constants.STRING_DEADS, deadString);
+            dicToRetrieve.put(Constants.STRING_ALIVES, aliveString.toString());
+            dicToRetrieve.put(Constants.STRING_DEADS, deadString.toString());
             dicToRetrieve.put(Constants.ALIVES, aliveList);
             dicToRetrieve.put(Constants.DEADS, deadList);
             dicToRetrieve.put(Constants.HTML_BODY_TABLE, bodyTableHTML);
@@ -85,7 +85,9 @@ public class BackUpService {
             list.add(member);
             labelString.append(name).append(",");
         }
-        labelString.replace(labelString.length() -1 , labelString.length(), "");
+        /*if(labelString.length() > 1) {
+            labelString.replace(labelString.length() - 1, labelString.length(), "");
+        }*/
     }
 
     public static void toBackUpData(Map<String,Object> dicToSave){
