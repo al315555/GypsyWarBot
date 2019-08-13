@@ -141,8 +141,12 @@ public final class BattlesAlgorithm {
             bodyTable = backup.get(Constants.HTML_BODY_TABLE) != null ? (String ) backup.get(Constants.HTML_BODY_TABLE) : "";
             bodyHistorical = backup.get(Constants.HTML_BODY_HISTORICAL) != null ? (String ) backup.get(Constants.HTML_BODY_HISTORICAL) : "";
             if(backup.get(Constants.HTML_BODY_TABLE) != null){
+                ArrayList<Member> all = new ArrayList<>();
+                all.addAll((ArrayList<Member>) backup.get(Constants.ALIVES));
+                all.addAll((ArrayList<Member>) backup.get(Constants.DEADS));
                 MemberFactory.setAliveMembers((ArrayList<Member>) backup.get(Constants.ALIVES));
                 MemberFactory.setDeadMembers((ArrayList<Member>) backup.get(Constants.DEADS));
+                MemberFactory.setAllMembers(all);
             }else{
                 MemberFactory.loadResourcesData();
             }

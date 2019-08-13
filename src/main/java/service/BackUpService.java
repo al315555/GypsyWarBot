@@ -154,6 +154,7 @@ public class BackUpService {
                 ps = connection.prepareStatement(sql);
                 ps.setInt(1, l_member.getDistinctCode());
                 ps.setString(2, l_member.getName());
+                ps.setInt(3, l_member.getKills());
                 //query execution
                 rsInt = ps.executeUpdate();
             }

@@ -35,6 +35,10 @@ public class MemberFactory implements FactoryData<Member> {
     public static void setAliveMembers( ArrayList<Member> l_mem){
         members = (ArrayList<Member> )l_mem.clone();
     }
+
+    public static void setAllMembers( ArrayList<Member> l_mem){
+        allMembers = (ArrayList<Member> )l_mem.clone();
+    }
 	
 	public static String getHtmlMembersList(){
         String res = "<div class=\"grid-container\">";
