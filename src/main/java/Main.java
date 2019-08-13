@@ -17,6 +17,7 @@ public class Main {
 
         port(getHerokuAssignedPort());
         get("/", (req, res) -> { return String.format( Constants.HTML_TEMPLATE_WAR_BOT, BattlesAlgorithm.htmlMembersList, BattlesAlgorithm.historicalTable); } );
+        get("/gamesHistory", (req, res) -> { return String.format( Constants.HTML_TEMPLATE_HISTORICAL_WAR_BOT,  BattlesAlgorithm.historicalBattles); } );
         get("/about", (req, res) -> "Gypsy family bot. Created by Ruben Higueras.");
         get("/sendEmailTest", (req, res) -> {
             emailService.sendEmail();

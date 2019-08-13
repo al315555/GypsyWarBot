@@ -23,9 +23,11 @@ public final class BattlesAlgorithm {
     private static Member winner = null;
 	private static TreeMap<Long, String> historicOfKills= new TreeMap<Long, String>();
 	public static String bodyTable = "";
+	public static String bodyHistorical = "";
 	private static boolean fisrtBlood = false;
 	public static String htmlMembersList = "";
 	public static String historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
+	public static String historicalBattles = String.format(Constants.RESULT_HISTORICAL_TEMPLATE, bodyHistorical);
 
     public static final void execution(){
         System.out.println("Executing service algorithm... ");
@@ -120,6 +122,7 @@ public final class BattlesAlgorithm {
             backup.put(Constants.ALIVES, MemberFactory.getAliveMembers());
             backup.put(Constants.DEADS, MemberFactory.getDeadMembers());
             backup.put(Constants.HTML_BODY_TABLE, bodyTable);
+           // backup.put(Constants.HTML_BODY_HISTORICAL, bodyHistorical);
             BackUpService.toBackUpData(backup);
 
             /*storeViewInFile();
@@ -136,6 +139,7 @@ public final class BattlesAlgorithm {
             final HashMap<String, Object> backup = new HashMap<>();
             BackUpService.toRetrieveData(backup);
             bodyTable = backup.get(Constants.HTML_BODY_TABLE) != null ? (String ) backup.get(Constants.HTML_BODY_TABLE) : "";
+            bodyHistorical = backup.get(Constants.HTML_BODY_HISTORICAL) != null ? (String ) backup.get(Constants.HTML_BODY_HISTORICAL) : "";
             if(backup.get(Constants.HTML_BODY_TABLE) != null){
                 MemberFactory.setAliveMembers((ArrayList<Member>) backup.get(Constants.ALIVES));
                 MemberFactory.setDeadMembers((ArrayList<Member>) backup.get(Constants.DEADS));
@@ -143,6 +147,7 @@ public final class BattlesAlgorithm {
                 MemberFactory.loadResourcesData();
             }
             historicalTable = String.format(Constants.RESULT_TABLE_TEMPLATE, bodyTable);
+            historicalBattles = String.format(Constants.RESULT_HISTORICAL_TEMPLATE, bodyHistorical);
             htmlMembersList = MemberFactory.getHtmlMembersList();
             fisrtBlood = !"".equals(bodyTable);
         }catch (Exception exception){
